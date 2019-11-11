@@ -10,22 +10,25 @@ import java.util.Iterator;
 
 import model.Funcionario;
 
-public class Funcionario_Controler { // nome;fk_cargo;cpf;salario
+public class Funcionario_Controler { // nome;fk_cargo;cpf;salario;bancoHora;cargaHora;dependentes
+	private String archive = "./funcionarios";
+
 	public void save(Funcionario funcionario) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter("./funcionarios", true));
-		writer.append(String.format("%s;%s;%s;%s", funcionario.getNome(), funcionario.getFk_cargo(),
-				funcionario.getCpf(), funcionario.getSalario()));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(archive, true));
+		writer.append(String.format("%s;%s;%s;%s;%s;%s;%s", funcionario.getNome(), funcionario.getFk_cargo(),
+				funcionario.getCpf(), funcionario.getSalario(), funcionario.getBanco_Horas(),
+				funcionario.getCarga_horaria(), funcionario.getDependentes()));
 		writer.newLine();
 		writer.close();
 	}
 
 	public Funcionario[] getAll() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("./funcionarios"));
+		BufferedReader reader = new BufferedReader(new FileReader(archive));
 		int counter = 0;
 		while (reader.readLine() != null)
 			counter++;
 		reader.close();
-		reader = new BufferedReader(new FileReader("./funcionarios"));
+		reader = new BufferedReader(new FileReader(archive));
 		Funcionario funcionarios[] = new Funcionario[counter];
 		for (int i = 0; reader.ready(); i++) {
 			String data = reader.readLine();
@@ -34,6 +37,9 @@ public class Funcionario_Controler { // nome;fk_cargo;cpf;salario
 			bolsominion.setFk_cargo(Integer.parseInt(data.split(";")[1]));
 			bolsominion.setNome(data.split(";")[0]);
 			bolsominion.setSalario(Double.parseDouble(data.split(";")[3]));
+			bolsominion.setBanco_Horas(Double.parseDouble(data.split(";")[4]));
+			bolsominion.setCarga_horaria(Double.parseDouble(data.split(";")[5]));
+			bolsominion.setDependentes(Integer.parseInt(""+data.split(";")[6]));
 			funcionarios[i] = bolsominion;
 		}
 		reader.close();
@@ -80,10 +86,12 @@ public class Funcionario_Controler { // nome;fk_cargo;cpf;salario
 		return returnFuncionarios;
 	}
 
-	public Funcionario[] getByCpf(Long cpf) throws IOException {
+	public Funcionario getByCpf(Long cpf) throws IOException { // only return one, whe dont have the primary key and not
+																// equals to make it easy
 		Funcionario_Controler c_funcionario = new Funcionario_Controler();
 		Funcionario[] funcionarios = c_funcionario.getAll();
-		Funcionario[] returnFuncionarios;
+		Funcionario returnFuncionario = new Funcionario();
+		;
 		ArrayList<Funcionario> listaFuncionarioDone = new ArrayList<>();
 		int counter = 0;
 		for (int i = 0; i < funcionarios.length; i++) {
@@ -92,11 +100,11 @@ public class Funcionario_Controler { // nome;fk_cargo;cpf;salario
 				counter++;
 			}
 		}
-		returnFuncionarios = new Funcionario[counter];
 		Iterator<Funcionario> iterator = listaFuncionarioDone.iterator();
 		for (int i = 0; iterator.hasNext(); i++) {
-			returnFuncionarios[i] = iterator.next();
+			returnFuncionario = iterator.next();
+			break;
 		}
-		return returnFuncionarios;
+		return returnFuncionario;
 	}
 }

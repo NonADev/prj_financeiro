@@ -2,9 +2,26 @@ package model;
 
 public class Funcionario { // nome;fk_cargo;cpf;salario
 	private String nome;
-	private int fk_cargo;
+	private int fk_cargo, dependentes;
 	private long cpf;
 	private double salario, banco_Horas, carga_horaria;
+
+	public void printAllCamps_funcionario(Funcionario f) {
+		System.out.println(String.format(
+				"+-----------------------------------------------------------+\n" + "+name: %s\n" + "+cpf: %s\n"
+						+ "+post: %s\n" + "+salary: %s\n" + "+Horary Amount: %s\n"
+						+ "+Horary Charge: %s\n+Dependentes: %s\n",
+				f.getNome(), f.getCpf(), f.getFk_cargo(), f.getSalario(), f.getBanco_Horas(), f.getCarga_horaria(),
+				f.getDependentes()));
+	}
+
+	public int getDependentes() {
+		return dependentes;
+	}
+
+	public void setDependentes(int dependentes) {
+		this.dependentes = dependentes;
+	}
 
 	public double getBanco_Horas() {
 		return banco_Horas;
