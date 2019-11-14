@@ -1,13 +1,13 @@
 package model;
 
 public class Cargo {
-	private int pk_cargo;
+	private int pk_id;
 	private String nome;
-	public int getPk_cargo() {
-		return pk_cargo;
+	public int getPk_id() {
+		return pk_id;
 	}
-	public void setPk_cargo(int pk_cargo) {
-		this.pk_cargo = pk_cargo;
+	public void setPk_id(int pk_id) {
+		this.pk_id = pk_id;
 	}
 	public String getNome() {
 		return nome;
