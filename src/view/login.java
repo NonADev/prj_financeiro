@@ -1,0 +1,76 @@
+package view;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+
+import javax.swing.*;
+
+public class login extends JFrame {
+
+	JLabel rotuloUsuario, rotuloSenha, titulo;
+	JTextField usuario;
+	JPasswordField senha;
+	JButton entrar;
+
+	public login() {
+		// geral (inicio)
+		super("Login");
+		Container tela = getContentPane();
+		ImageIcon icone_tela = new ImageIcon("Icones/coin.png");
+		tela.setLayout(null);
+		setIconImage(icone_tela.getImage());
+
+		// defini��es
+		titulo = new JLabel("Login");
+		titulo.setFont(new Font("Arial", Font.BOLD, 18));
+		rotuloUsuario = new JLabel("Usu�rio:");
+		rotuloSenha = new JLabel("Senha:");
+		usuario = new JTextField("");
+		senha = new JPasswordField(18);
+		entrar = new JButton("Entrar");
+
+		// setBounds
+		titulo.setBounds(108, 13, 200, 20);
+		rotuloUsuario.setBounds(15, 50, 50, 20);
+		rotuloSenha.setBounds(15, 80, 50, 20);
+		usuario.setBounds(70, 50, 170, 20);
+		senha.setBounds(70, 80, 170, 20);
+		entrar.setBounds(10, 117, 244, 30);
+
+		// eventos
+		entrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					for (int c = 0; c < 1; c--) {
+						dispose();
+						menu_principal menu = new menu_principal();
+						break;
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Usu�rio e/ou senha inv�lidos", "Erro",
+							JOptionPane.ERROR_MESSAGE, null);
+					usuario.setText("");
+					senha.setText("");
+				}
+			}
+		});
+
+		// Container add
+		tela.add(titulo);
+		tela.add(rotuloUsuario);
+		tela.add(rotuloSenha);
+		tela.add(usuario);
+		tela.add(senha);
+		tela.add(entrar);
+
+		// geral (final)
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(270, 187);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		tela.setBackground(new Color(194, 249, 153));
+	}
+}
